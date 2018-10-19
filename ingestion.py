@@ -4,9 +4,10 @@ from py2neo import Graph, Node
 N_MOVIES = 5000
 N_RATINGS = 5000
 N_TAGS = 5000
+N_LINKS = 5000
 
 USERNAME = "neo4j"
-PASS = "neo4j" #default
+PASS = "123456" #default
 
 graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
 
@@ -15,20 +16,19 @@ def main():
 
     createGenreNodes()
 
-    print("Step 1 out of 3: loading movie nodes")
-
+    print("Step 1 out of 4: loading movie nodes")
     loadMovies()
 
-    print("Step 2 out of 3: loading rating relationships")
-
+    print("Step 2 out of 4: loading rating relationships")
     loadRatings()
 
-    print("Step 3 out of 3: loading tag relationships")
-
+    print("Step 3 out of 4: loading tag relationships")
     loadTags()
 
-def createGenreNodes():
+    print("Step 4 out of 4: updating links to movie nodes")
+    loadLinks()
 
+def createGenreNodes():
     allGenres = ["Action", "Adventure", "Animation", "Children's", "Comedy", "Crime",
                  "Documentary", "Drama", "Fantasy", "Film-Noir", "Horror", "Musical",
                  "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Western"]
@@ -39,7 +39,6 @@ def createGenreNodes():
 
 
 def loadMovies():
-
     with open('data/movies.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
         next(readCSV, None)  # skip header
@@ -57,7 +56,6 @@ def loadMovies():
                 break
 
 def createMovieNodes(row):
-
     movieData = parseRowMovie(row)
     id = movieData[0]
     title = movieData[1]
@@ -74,14 +72,12 @@ def parseRowMovie(row):
 
 
 def createGenreMovieRelationships(row):
-
     movieId = row[0]
     movieGenres = row[2].split("|")
 
     for movieGenre in movieGenres:
         graph.run('MATCH (g:Genre {name: {genre}}), (m:Movie {id: {movieId}}) CREATE (g)-[:IS_GENRE_OF]->(m)',
             genre=movieGenre, movieId=movieId)
-
 
 def parseRowGenreMovieRelationships(row):
     movieId = row[0]
@@ -108,7 +104,6 @@ def createUserNodes(row):
     graph.merge(user, "User", "id")
 
 def createRatingRelationship(row):
-
     ratingData = parseRowRatingRelationships(row)
 
     graph.run(
@@ -116,7 +111,6 @@ def createRatingRelationship(row):
         userId=ratingData[0], movieId=ratingData[1], rating=ratingData[2], timestamp=ratingData[3])
 
 def parseRowRatingRelationships(row):
-
     userId = "User " + row[0]
     movieId = row[1]
     rating = row[2]
@@ -138,7 +132,6 @@ def loadTags():
                  break
 
 def createTagRelationship(row):
-
     tagData = parseRowTagRelationships(row)
 
     graph.run(
@@ -152,6 +145,37 @@ def parseRowTagRelationships(row):
     timestamp = row[3]
 
     return (userId, movieId, tag, timestamp)
+
+def loadLinks():
+    with open('data/links.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=',')
+        next(readCSV, None)  # skip header
+        for i, row in enumerate(readCSV):
+
+            updateMovieNodeWithLinks(row)
+
+            if (i % 100 == 0):
+                print(f"{i}/{N_LINKS} Movie nodes updated with links")
+
+            # break after N_LINKS movies
+
+            if i >= N_LINKS:
+                break
+
+def updateMovieNodeWithLinks(row):
+    linkData = parseRowLinks(row)
+
+    graph.run(
+        'MATCH (m:Movie {id: {movieId}}) SET m += { imdbId: {imdbId} , tmdbId: {tmdbId} }',
+        movieId=linkData[0], imdbId=linkData[1], tmdbId=linkData[2])
+
+def parseRowLinks(row):
+    movieId = row[0]
+    imdbId = row[1]
+    tmdbId = row[2]
+
+    return (movieId, imdbId, tmdbId)
+
 
 if __name__ == '__main__':
     main()
