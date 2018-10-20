@@ -38,3 +38,12 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 ![alt text](https://i.imgur.com/PW1GohY.png "Logo Title Text 1")
 
 ## Ingestion
+
+## API
+
+##### Description
+
+##### Documentation
+
+![alt text](https://i.imgur.com/64IvcAL.png)
+
