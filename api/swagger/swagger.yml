@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  description: This is the API documentation on how to interact with MovieLens data in Neo4j.
+  version: "1.0.0"
+  title: MovieLens - Neo4j API Documentation
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /movie/details/{title}:
+    get:
+      operationId: "movielens-app.getMovieData"
+      summary: "The people data structure supported by the server application"
+      description: "Get the available data about a given movie."
+      "tags": [
+      "Movie"
+      ]
+      parameters:
+        - name: title
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "returns movie data"
+          schema:
+            type: "array"
+            items:
+              properties:
+                id:
+                  type: "string"
+                imdbId:
+                  type: "string"
+                title:
+                  type: "string"
+                tmdbId:
+                  type: "string"
+                year:
+                  type: "string"
+  /movie/genres/{title}:
+    get:
+      operationId: "movielens-app.getMovieGenres"
+      summary: "The people data structure supported by the server application"
+      description: "Get genreeee data about a given movie."
+      "tags": [
+      "Movie"
+      ]
+      parameters:
+        - name: title
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "returns movie data"
+          schema:
+            type: "array"
+            items:
+              properties:
+                id:
+                  type: "string"
+                imdbId:
+                  type: "string"
+                title:
+                  type: "string"
+                tmdbId:
+                  type: "string"
+                year:
+                  type: "string"
