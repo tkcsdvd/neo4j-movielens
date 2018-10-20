@@ -45,5 +45,5 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 
 ##### Documentation
 
-![alt text](https://i.imgur.com/64IvcAL.png)
+![alt text](https://i.imgur.com/o1nc2bD.png)
 
