@@ -1,5 +1,7 @@
 # MovieLens in Neo4j
 
+Load MovieLens dataset in a graph structure into Neo4j and provide an API to retrieve data.
+
 ## Stack
 
  * python 3.7
@@ -8,6 +10,35 @@
  * flask
  * swagger
  * connexion
+
+## Project structure
+
+```
+├── api/
+│   │── swagger/
+│   │   └── swagger.yml
+│   └── movielens-app.py│
+│      
+├── docker/
+│   │── ingestion/
+│   │   │── data/
+│   │   │   └── links.csv
+│   │   │   └── movies.csv
+│   │   │   └── ratings.csv
+│   │   │   └── tags.csv
+│   │   │── Dockerfile
+│   │   │── ingestion.py
+│   │   └── requirements.txt
+│   └── docker-compose.yml
+│
+├── ingestion/
+│   │── test/
+│   │   └── ingestion_tests.py
+│   └── ingestion.py
+│
+└── README.md
+```
+
 
 ## Data
 
@@ -61,8 +92,14 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 
 ##### Instructions
 
-You can
-
+ * download dataset from http://files.grouplens.org/datasets/movielens/ml-20m.zip 
+ * move unzipped data into docker/ingestion/data
+ * *cd* into folder
+ * run ``` docker-compose up ```
+ * wait for ingestion to finish
+ * open Neo4j UI at http://localhost:7474
+ * open API documentation at http://localhost/api/ui
+ 
 
 ##### Structure
 
