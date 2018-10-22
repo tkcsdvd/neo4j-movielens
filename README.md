@@ -21,11 +21,6 @@ Load MovieLens dataset in a graph structure into Neo4j and provide an API to ret
 │      
 ├── docker/
 │   │── ingestion/
-│   │   │── data/
-│   │   │   └── links.csv
-│   │   │   └── movies.csv
-│   │   │   └── ratings.csv
-│   │   │   └── tags.csv
 │   │   │── Dockerfile
 │   │   │── ingestion.py
 │   │   └── requirements.txt
