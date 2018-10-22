@@ -1,4 +1,13 @@
-# Load MovieLens Dataset Into Neo4j
+# MovieLens in Neo4j
+
+## Stack
+
+ * python 3.7
+ * py2neo
+ * neo4j
+ * flask
+ * swagger
+ * connexion
 
 ## Data
 
@@ -47,3 +56,30 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 
 ![alt text](https://i.imgur.com/4MaEl2w.png)
 
+
+## Docker
+
+##### Instructions
+
+You can
+
+
+##### Structure
+
+
+```
+docker
+│   README.md
+│   docker-compose.yml    
+│
+└─── ingestion
+    │   Dockerfile
+    │   ingestion.py
+    │   requirements.txt
+    │
+    └─── data
+            links.csv
+            movies.csv
+            ratings.csv
+            tags.csv
+```
