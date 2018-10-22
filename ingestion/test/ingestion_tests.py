@@ -1,6 +1,6 @@
 import unittest
 
-from ingestion import parseRowMovie, parseRowGenreMovieRelationships, parseRowRatingRelationships, parseRowTagRelationships, parseRowLinks
+from ingestion.ingestion import parseRowMovie, parseRowGenreMovieRelationships, parseRowRatingRelationships, parseRowTagRelationships, parseRowLinks
 
 class ParserTests(unittest.TestCase):
 

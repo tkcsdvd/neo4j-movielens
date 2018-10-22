@@ -1,15 +1,15 @@
 import csv
 from py2neo import Graph, Node
 
-N_MOVIES = 5000
-N_RATINGS = 5000
-N_TAGS = 5000
-N_LINKS = 5000
+N_MOVIES = 1000
+N_RATINGS = 1000
+N_TAGS = 1000
+N_LINKS = 1000
 
 USERNAME = "neo4j"
 PASS = "123456" #default
 
-graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
+graph = Graph("bolt://jaja:7687", auth = (USERNAME, PASS))
 
 
 def main():
@@ -113,7 +113,7 @@ def createRatingRelationship(row):
 def parseRowRatingRelationships(row):
     userId = "User " + row[0]
     movieId = row[1]
-    rating = row[2]
+    rating = float(row[2])
     timestamp = row[3]
 
     return (userId, movieId, rating, timestamp)

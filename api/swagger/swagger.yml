@@ -15,8 +15,8 @@ paths:
   /movie/details/{title}:
     get:
       operationId: "movielens-app.getMovieData"
-      summary: "The people data structure supported by the server application"
-      description: "Get the available data about a given movie."
+      summary: "Get the available details about a given movie."
+      description: "Get the available details about a given movie."
       "tags": [
       "Movie"
       ]
@@ -28,7 +28,7 @@ paths:
           type: string
       responses:
         200:
-          description: "returns movie data"
+          description: "Returns movie details."
           schema:
             type: "array"
             items:
@@ -43,11 +43,62 @@ paths:
                   type: "string"
                 year:
                   type: "string"
+
   /movie/genres/{title}:
     get:
       operationId: "movielens-app.getMovieGenres"
-      summary: "The people data structure supported by the server application"
-      description: "Get genreeee data about a given movie."
+      summary: "Get the genres associated with a given movie."
+      description: "Get the genres associated with given movie."
+      "tags": [
+      "Movie"
+      ]
+      parameters:
+        - name: title
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns genres."
+          schema:
+            type: "array"
+            items:
+              properties:
+                name:
+                  type: "string"
+
+  /movie/ratings/{title}:
+    get:
+      operationId: "movielens-app.getMovieRatings"
+      summary: "Get the ratings submitted for a given movie."
+      description: "Get the ratings submitted for a given movie."
+      "tags": [
+      "Movie"
+      ]
+      parameters:
+        - name: title
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns movie ratings."
+          schema:
+            type: "array"
+            items:
+              properties:
+                rating:
+                  type: "string"
+                user:
+                  type: "string"
+
+  /movie/tags/{title}:
+    get:
+      operationId: "movielens-app.getMovieTags"
+      summary: "Get the tags submitted for a given movie."
+      description: "Get the tags submitted for a given movie."
       "tags": [
       "Movie"
       ]
@@ -64,13 +115,189 @@ paths:
             type: "array"
             items:
               properties:
-                id:
+                tag:
                   type: "string"
-                imdbId:
+                user:
+                  type: "string"
+
+  /movie/year/{year}:
+    get:
+      operationId: "movielens-app.getMoviesByYear"
+      summary: "Get movies from a given year."
+      description: "Get movies from a given year."
+      "tags": [
+      "Movie"
+      ]
+      parameters:
+        - name: year
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns movies from the given year."
+          schema:
+            type: "array"
+            items:
+              properties:
+                title:
+                  type: "string"
+                year:
+                  type: "string"
+
+  /movie/average-rating/{title}:
+    get:
+      operationId: "movielens-app.getMovieAverageRating"
+      summary: "Get the average rating of movie."
+      description: "Get the average rating of movie."
+      "tags": [
+      "Movie"
+      ]
+      parameters:
+        - name: title
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns average rating for a given movie."
+          schema:
+            type: "array"
+            items:
+              properties:
+                averageRating:
                   type: "string"
                 title:
                   type: "string"
-                tmdbId:
+
+  /top/movie/top-n/{n}:
+    get:
+      operationId: "movielens-app.getMovieTopN"
+      summary: "Get top N highest rated movies."
+      description: "Get top N highest rated movies.."
+      "tags": [
+      "Top"
+      ]
+      parameters:
+        - name: n
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns top N highest rated movies."
+          schema:
+            type: "array"
+            items:
+              properties:
+                averageRating:
                   type: "string"
-                year:
+                title:
+                  type: "string"
+
+  /top/movie/n-most-rated/{n}:
+    get:
+      operationId: "movielens-app.getMovieNMostRated"
+      summary: "Get N most rated movies."
+      description: "Get N most rated movies."
+      "tags": [
+      "Top"
+      ]
+      parameters:
+        - name: n
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns N most rated movies."
+          schema:
+            type: "array"
+            items:
+              properties:
+                NumberOfRatings:
+                  type: "string"
+                title:
+                  type: "string"
+
+  /user/ratings/{userId}:
+    get:
+      operationId: "movielens-app.getUserRatings"
+      summary: "Get the ratings submitted by a given user."
+      description: "Get the ratings submitted by a given user."
+      "tags": [
+      "User"
+      ]
+      parameters:
+        - name: userId
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Get the ratings submitted by a given user."
+          schema:
+            type: "array"
+            items:
+              properties:
+                movie:
+                  type: "string"
+                rating:
+                  type: "string"
+
+  /user/tags/{userId}:
+    get:
+      operationId: "movielens-app.getUserTags"
+      summary: "Get the tags submitted by a given user."
+      description: "Get the tags submitted by a given user."
+      "tags": [
+      "User"
+      ]
+      parameters:
+        - name: userId
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns the tags submitted by a given user."
+          schema:
+            type: "array"
+            items:
+              properties:
+                tag:
+                  type: "string"
+                title:
+                  type: "string"
+
+  /user/average-rating/{userId}:
+    get:
+      operationId: "movielens-app.getUserAverageRating"
+      summary: "Get the average ratings submitted by a given user."
+      description: "Get the average ratings submitted by a given user."
+      "tags": [
+      "User"
+      ]
+      parameters:
+        - name: userId
+          in: path
+          description: movie title
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns the average ratings submitted by a given user."
+          schema:
+            type: "array"
+            items:
+              properties:
+                averageRating:
+                  type: "string"
+                user:
                   type: "string"
