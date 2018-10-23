@@ -86,16 +86,34 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 ## Docker
 
 ##### Instructions
-
- * download dataset from http://files.grouplens.org/datasets/movielens/ml-20m.zip 
- * move unzipped data into docker/ingestion/data
+ 
  * *cd* into folder
  * run ``` docker-compose up ```
  * wait for ingestion to finish
+ 
+    ![alt text](https://i.imgur.com/AoPs8hE.png=100x)
  * open Neo4j UI at http://localhost:7474
  * open API documentation at http://localhost/api/ui
  
+**For the Docker solution the MovieLens version with 100K ratings was used**
 
+If you want to use the 20M dataset:
+
+ * download dataset from http://files.grouplens.org/datasets/movielens/ml-20m.zip 
+ * move unzipped data into docker/ingestion/data
+ * then follow instructions above
+ 
+**By default it only loads 1000 movies/users/ratings/tags.**
+
+If you want to increase that, you can do so in **ingestion.py**:
+
+```python
+N_MOVIES = 1000
+N_RATINGS = 1000
+N_TAGS = 1000
+N_LINKS = 1000
+```
+ 
 ##### Structure
 
 
