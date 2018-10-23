@@ -7,7 +7,7 @@ import time
 app = Flask(__name__)
 
 # wait for Neo4j in Docker
-# time.sleep(15)
+time.sleep(15)
 
 # NEO4J_HOST will be provided by Docker, otherwise localhost
 
@@ -123,4 +123,4 @@ if __name__ == '__main__':
     # Read the swagger.yml file to configure the endpoints
     app.add_api('swagger.yml')
 
-    app.run(port=5001, host='0.0.0.0', debug=True)
+    app.run(port=5000, host='0.0.0.0', debug=True)

@@ -92,6 +92,19 @@ def getUserAverageRating(userId):
     return jsonify(avg.data())
 
 
+##### Recommender Enginer
+
+# Content based
+@app.route('/api/rec_engine/content/<title>/<n>')
+
+def getRecContent(title,n):
+    avg = graph.run('MATCH (m:Movie)<-[:IS_GENRE_OF]-(g:Genre)-[:IS_GENRE_OF]->(rec:Movie) '
+                    'WHERE m.title = {title} '
+                    'WITH rec, COLLECT(g.name) AS genres, COUNT(*) AS numberOfSharedGenres '
+                    'RETURN rec.title as title, genres, numberOfSharedGenres '
+                    'ORDER BY numberOfSharedGenres DESC LIMIT toInt({n});', title=title, n=n)
+
+    return jsonify(avg.data())
 
 if __name__ == '__main__':
 
