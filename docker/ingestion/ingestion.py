@@ -1,15 +1,24 @@
 import csv
 from py2neo import Graph, Node
+import os
+import time
+
+# wait for Neo4j in Docker
+time.sleep(15)
 
 N_MOVIES = 1000
 N_RATINGS = 1000
 N_TAGS = 1000
 N_LINKS = 1000
 
-USERNAME = "neo4j"
+# NEO4J_HOST will be provided by Docker, otherwise localhost
+
+HOST = os.environ.get("NEO4J_HOST", "localhost")
+PORT = 7687
+USER = "neo4j"
 PASS = "neo4j" #default
 
-graph = Graph("bolt://127.0.0.1:7687", auth = (USERNAME, PASS))
+graph = Graph("bolt://" + HOST + ":7687", auth=(USER, PASS))
 
 def main():
 

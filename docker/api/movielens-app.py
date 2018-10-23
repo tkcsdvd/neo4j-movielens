@@ -1,10 +1,22 @@
 from flask import Flask, jsonify, request
-from py2neo import Graph, Node, NodeMatcher
+from py2neo import Graph, Node, NodeMatcher, Database
 import connexion
+import os
+import time
 
 app = Flask(__name__)
 
-graph = Graph("bolt://127.0.0.1:7687", auth=("neo4j", "neo4j"))
+# wait for Neo4j in Docker
+time.sleep(15)
+
+# NEO4J_HOST will be provided by Docker, otherwise localhost
+
+HOST = os.environ.get("NEO4J_HOST", "localhost")
+PORT = 7687
+USER = "neo4j"
+PASS = "neo4j" #default
+
+graph = Graph("bolt://" + HOST + ":7687", auth=(USER, PASS))
 
 # Get the available deatils of a given movie
 @app.route('/api/movie/details/<title>')

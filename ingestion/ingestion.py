@@ -7,9 +7,9 @@ N_TAGS = 1000
 N_LINKS = 1000
 
 USERNAME = "neo4j"
-PASS = "123456" #default
+PASS = "neo4j" #default
 
-graph = Graph("bolt://jaja:7687", auth = (USERNAME, PASS))
+graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
 
 
 def main():
