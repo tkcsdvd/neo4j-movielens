@@ -20,7 +20,7 @@ class ParserTests(unittest.TestCase):
     def test_parse_row_rating_relationship(self):
 
         row = "1,29,3.5,1112484676".split(",")
-        self.assertEquals (parseRowRatingRelationships(row), ("User 1", "29", "3.5", "1112484676"))
+        self.assertEquals (parseRowRatingRelationships(row), ("User 1", "29", 3.5, "1112484676"))
 
     # test the parsing of tag relationships
     def test_parse_row_tag_relationship(self):
