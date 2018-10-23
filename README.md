@@ -91,10 +91,13 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
  * run ``` docker-compose up ```
  * wait for ingestion to finish
  
-    ![alt text](https://i.imgur.com/AoPs8hE.png=100x)
+    <img src="https://i.imgur.com/AoPs8hE.png" width="300">
+
  * open Neo4j UI at http://localhost:7474
  * open API documentation at http://localhost/api/ui
  
+
+
 **For the Docker solution the MovieLens version with 100K ratings was used**
 
 If you want to use the 20M dataset:
