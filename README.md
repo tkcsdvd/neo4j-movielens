@@ -13,6 +13,7 @@ Load MovieLens dataset in a graph structure into Neo4j and provide an API to ret
  * [Ingestion](#ingestion)
  * [API](#api)
  * [Docker](#docker)
+ * [Recommender Enginer](#recommender-engine)
 
 
 ## Stack
@@ -176,6 +177,8 @@ N_RATINGS = 1000
 N_TAGS = 1000
 N_LINKS = 1000
 ```
+
+If only a subset is used, some relationships might not be created due to missing nodes.
  
 ##### Structure
 
@@ -195,4 +198,52 @@ docker
             movies.csv
             ratings.csv
             tags.csv
+```
+
+## Recommender Engine
+
+##### Content-based
+
+Recommend top *N* movies for a given movie, based on common genres.
+
+/api/rec_engine/content/[TITLE]/[N]
+
+**Example:**
+
+Top 3 movies similar to *Braveheart*.
+
+http://localhost:5001/api/rec_engine/content/Braveheart/3
+
+Returns:
+
+```
+[
+  {
+    "genres": [
+      "Action", 
+      "Drama", 
+      "War"
+    ], 
+    "numberOfSharedGenres": 3, 
+    "title": "We Were Soldiers"
+  }, 
+  {
+    "genres": [
+      "Action", 
+      "Drama", 
+      "War"
+    ], 
+    "numberOfSharedGenres": 3, 
+    "title": "Legionnaire"
+  }, 
+  {
+    "genres": [
+      "Action", 
+      "Drama", 
+      "War"
+    ], 
+    "numberOfSharedGenres": 3, 
+    "title": "Inglorious Bastards (Quel maledetto treno blindato)"
+  }
+]
 ```

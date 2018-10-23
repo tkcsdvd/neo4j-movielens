@@ -7,7 +7,7 @@ import time
 app = Flask(__name__)
 
 # wait for Neo4j in Docker
-time.sleep(15)
+# time.sleep(15)
 
 # NEO4J_HOST will be provided by Docker, otherwise localhost
 
@@ -101,6 +101,19 @@ def getUserAverageRating(userId):
     return jsonify(avg.data())
 
 
+##### Recommender Enginer
+
+# Content based
+@app.route('/api/rec_engine/content/<title>/<n>')
+
+def getRecContent(title,n):
+    avg = graph.run('MATCH (m:Movie)<-[:IS_GENRE_OF]-(g:Genre)-[:IS_GENRE_OF]->(rec:Movie) '
+                    'WHERE m.title = {title} '
+                    'WITH rec, COLLECT(g.name) AS genres, COUNT(*) AS numberOfSharedGenres '
+                    'RETURN rec.title as title, genres, numberOfSharedGenres '
+                    'ORDER BY numberOfSharedGenres DESC LIMIT toInt({n});', title=title, n=n)
+
+    return jsonify(avg.data())
 
 if __name__ == '__main__':
 
@@ -110,4 +123,4 @@ if __name__ == '__main__':
     # Read the swagger.yml file to configure the endpoints
     app.add_api('swagger.yml')
 
-    app.run(port=5000, host='0.0.0.0', debug=True)
+    app.run(port=5001, host='0.0.0.0', debug=True)

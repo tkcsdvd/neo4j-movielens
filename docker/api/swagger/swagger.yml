@@ -301,3 +301,36 @@ paths:
                   type: "string"
                 user:
                   type: "string"
+
+  /rec_engine/content/{title}/{n}:
+    get:
+      operationId: "movielens-app.getRecContent"
+      summary: "Content-based recommender based on common genres."
+      description: "Content-based recommender based on common genres."
+      "tags": [
+      "Recommender Engine"
+      ]
+      parameters:
+        - name: title
+          in: path
+          description: movie title
+          required: true
+          type: string
+        - name: n
+          in: path
+          description: n of recommendations
+          required: true
+          type: string
+      responses:
+        200:
+          description: "Returns top N recommendations based on genres."
+          schema:
+            type: "array"
+            items:
+              properties:
+                genres:
+                  type: "string"
+                numberOfSharedGenres:
+                  type: "string"
+                title:
+                  type: "string"
