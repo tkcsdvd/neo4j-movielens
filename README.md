@@ -91,7 +91,38 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 
 ##### Description
 
+API documentation is generated using *Swagger* and *Connexion*.
+
+One example: 
+
+**/api/movie/ratings/[TITLE]**
+
+Returns the ratings submitted for a given movie. 
+
+http://localhost:5000/api/movie/ratings/Braveheart
+
+will return:
+
+```
+[
+  {
+    "rating": 4.0, 
+    "user": "User 1"
+  }, 
+  {
+    "rating": 4.0, 
+    "user": "User 5"
+  }, 
+  {
+    "rating": 5.0, 
+    "user": "User 6"
+  }
+]
+```
+
 ##### Documentation
+
+When docker compose up is finished go to http://localhost:5000/api/ui .
 
 ![](https://i.imgur.com/4MaEl2w.png)
 
