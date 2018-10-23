@@ -247,3 +247,13 @@ Returns:
   }
 ]
 ```
+
+Cypher query:
+
+```cypher
+MATCH (m:Movie)<-[:IS_GENRE_OF]-(g:Genre)-[:IS_GENRE_OF]->(rec:Movie)
+WHERE m.title = [TITLE]
+WITH rec, COLLECT(g.name) AS genres, COUNT(*) AS sharedGenres
+RETURN rec.title as title, genres, sharedGenres
+ORDER BY sharedGenres DESC LIMIT [N];
+```
