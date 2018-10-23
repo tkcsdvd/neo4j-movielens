@@ -2,6 +2,8 @@
 
 Load MovieLens dataset in a graph structure into Neo4j and provide an API to retrieve data.
 
+![](https://i.imgur.com/uHgJsHp.png)
+
 ## Stack
 
  * python 3.7
@@ -70,7 +72,7 @@ Identifiers that can be used to link to other sources of movie data are containe
 
 The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Movie**, **User**), 3 *relationships* (**RATED**, **TAGGED**, **IS_GENRE_OF**). Links are added as additional *properties* to movie nodes.
 
-![alt text](https://i.imgur.com/PW1GohY.png "Logo Title Text 1")
+![](https://i.imgur.com/PW1GohY.png "Logo Title Text 1")
 
 ## Ingestion
 
@@ -80,7 +82,7 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 
 ##### Documentation
 
-![alt text](https://i.imgur.com/4MaEl2w.png)
+![](https://i.imgur.com/4MaEl2w.png)
 
 
 ## Docker
@@ -91,7 +93,7 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
  * run ``` docker-compose up ```
  * wait for ingestion to finish
  
-    <img src="https://i.imgur.com/AoPs8hE.png" width="300">
+    <img src="https://i.imgur.com/AoPs8hE.png" width="400">
 
  * open Neo4j UI at http://localhost:7474
  * open API documentation at http://localhost/api/ui
@@ -103,12 +105,12 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 If you want to use the 20M dataset:
 
  * download dataset from http://files.grouplens.org/datasets/movielens/ml-20m.zip 
- * move unzipped data into docker/ingestion/data
+ * move unzipped data into *docker/ingestion/data*
  * then follow instructions above
  
-**By default it only loads 1000 movies/users/ratings/tags.**
+**By default it only loads 1000 movies/links/ratings/tags.**
 
-If you want to increase that, you can do so in **ingestion.py**:
+If you want to increase that, you can do so by changing *ingestion.py*:
 
 ```python
 N_MOVIES = 1000
