@@ -2,21 +2,35 @@ version: "3"
 
 services:
 
+  # Neo4j database
+  neo4j:
+    image: neo4j:3.4.9
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      NEO4J_AUTH: "none"
+
   # Python code ingesting the MovieLens dataset into Neo4j
   ingestion:
     build: ingestion
     depends_on:
       - neo4j
     restart: on-failure
-    network_mode: host
-
-  # Neo4j database
-  neo4j:
-    image: neo4j:3.4.9
-    ports:
-      - "7474:7474"
-      - "7687:7687"
+    links:
+      - neo4j
     environment:
-      NEO4J_AUTH: "none"
-    network_mode: bridge
+      NEO4J_HOST: neo4j
 
+  # API
+  api:
+    build: api
+    ports:
+      - 5000:5000
+    depends_on:
+      - neo4j
+    restart: on-failure
+    links:
+      - neo4j
+    environment:
+      NEO4J_HOST: neo4j
