@@ -6,8 +6,8 @@ import time
 # wait for Neo4j in Docker
 time.sleep(15)
 
-N_MOVIES = 10000
-N_RATINGS = 50000
+N_MOVIES = 1000
+N_RATINGS = 1000
 N_TAGS = 1000
 N_LINKS = 1000
 
