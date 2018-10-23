@@ -4,12 +4,14 @@ Load MovieLens dataset in a graph structure into Neo4j and provide an API to ret
 
 ![](https://i.imgur.com/uHgJsHp.png)
 
+## Table of contents
+
  * [Stack](#stack)
  * [Project structure](#project-structure)
  * [Data](#data)
  * [Ingestion](#ingestion)
  * [API](#api)
-
+ * [Docker](#docker)
 
 
 ## Stack
