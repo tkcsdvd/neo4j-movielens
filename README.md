@@ -87,9 +87,25 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
 
 ## Ingestion
 
+Python script (*ingestion.py*) that loads MovieLens dataset into Neo4j in a graph structure.
+
+#### Steps
+
+ * Create **Genre** nodes
+ * Load *movies.csv* 
+    * Create **Movie** nodes
+    * Create Movie-Genre relationships
+ * Load *ratings.csv*
+    * Create **User** nodes
+    * Create User-Movie **rating** relationships
+ * Load *tags.csv*
+    * Create User-Movie **tag** relationships
+ * Load *links.csv*
+    * Update Movie nodes properties with links
+
 ## API
 
-##### Description
+#### Description
 
 API documentation is generated using *Swagger* and *Connexion*.
 
@@ -120,9 +136,9 @@ will return:
 ]
 ```
 
-##### Documentation
+#### Documentation
 
-When docker compose up is finished go to http://localhost:5000/api/ui .
+When docker compose up is finished go to http://localhost:5000/api/ui to see the full documentation.
 
 ![](https://i.imgur.com/4MaEl2w.png)
 
