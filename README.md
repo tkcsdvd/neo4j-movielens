@@ -4,6 +4,14 @@ Load MovieLens dataset in a graph structure into Neo4j and provide an API to ret
 
 ![](https://i.imgur.com/uHgJsHp.png)
 
+ * [Stack](#stack)
+ * [Project structure](#project-structure)
+ * [Data](#data)
+ * [Ingestion](#ingestion)
+ * [API](#api)
+
+
+
 ## Stack
 
  * python 3.7
@@ -96,7 +104,7 @@ The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Mo
     <img src="https://i.imgur.com/AoPs8hE.png" width="400">
 
  * open Neo4j UI at http://localhost:7474
- * open API documentation at http://localhost/api/ui
+ * open API documentation at http://localhost:5000/api/ui
  
 
 
