@@ -4,7 +4,10 @@ import connexion
 
 app = Flask(__name__)
 
-graph = Graph("bolt://127.0.0.1:7687", auth=("neo4j", "neo4j"))
+USERNAME = "neo4j"
+PASS = "neo4j" #default
+
+graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
 
 # Get the available deatils of a given movie
 @app.route('/api/movie/details/<title>')
