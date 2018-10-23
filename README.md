@@ -225,7 +225,7 @@ Returns:
       "War"
     ], 
     "numberOfSharedGenres": 3, 
-    "title": "We Were Soldiers"
+    "title": "Courage Under Fire"
   }, 
   {
     "genres": [
@@ -234,7 +234,7 @@ Returns:
       "War"
     ], 
     "numberOfSharedGenres": 3, 
-    "title": "Legionnaire"
+    "title": "Great Escape, The"
   }, 
   {
     "genres": [
@@ -243,7 +243,7 @@ Returns:
       "War"
     ], 
     "numberOfSharedGenres": 3, 
-    "title": "Inglorious Bastards (Quel maledetto treno blindato)"
+    "title": "Henry V"
   }
 ]
 ```
