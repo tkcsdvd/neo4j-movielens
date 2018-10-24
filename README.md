@@ -266,7 +266,7 @@ RETURN rec.title as title, genres, sharedGenres
 ORDER BY sharedGenres DESC LIMIT [N];
 ```
 
-##### Collaborative Filtering
+#### Collaborative Filtering
 
 Recommend top *N* movies for a given user, based on collaborative filtering. For this to work properly much more than 1000 ratings should be loaded.
 
@@ -274,7 +274,7 @@ Recommend top *N* movies for a given user, based on collaborative filtering. For
 
 **Example:**
 
-For *User 1* returns top *5* movies.
+For *User 1* return top *5* movies.
 
 http://localhost:5000/api/rec_engine/collab/User%201/5
 
