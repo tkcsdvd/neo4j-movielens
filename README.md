@@ -1,6 +1,6 @@
 # MovieLens in Neo4j
 
-Load MovieLens dataset in a graph structure into Neo4j and provide an API to retrieve data.
+Load MovieLens dataset into Neo4j and provide an API to retrieve data.
 
 ![](https://i.imgur.com/uHgJsHp.png)
 
