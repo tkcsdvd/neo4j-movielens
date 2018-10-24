@@ -9,7 +9,7 @@ Load MovieLens dataset into Neo4j and provide an API to retrieve data.
  * [Requirements](#requirements)
  * [Project structure](#project-structure)
  * [Data](#data)
- * [Graph Structure](#graph-structure)
+ * [Graph structure](#graph-structure)
  * [Ingestion](#ingestion)
  * [API](#api)
  * [Docker](#docker)
@@ -83,7 +83,7 @@ Identifiers that can be used to link to other sources of movie data are containe
     
 ## Graph Structure
 
-The graph structures consists of nodes with 3 distinct *labels* (**Genre**, **Movie**, **User**), 3 *relationships* (**RATED**, **TAGGED**, **IS_GENRE_OF**). Links are added as additional *properties* to movie nodes.
+The graph structure consists of nodes with 3 distinct *labels* (**Genre**, **Movie**, **User**), and 3 *relationships* (**RATED**, **TAGGED**, **IS_GENRE_OF**). Links are added as additional *properties* to movie nodes.
 
 ![](https://i.imgur.com/PW1GohY.png "Logo Title Text 1")
 
@@ -144,6 +144,10 @@ When docker compose up is finished go to http://localhost:5000/api/ui to see the
 
 ![](https://i.imgur.com/4MaEl2w.png)
 
+For example:
+
+![](https://i.imgur.com/aLFprys.png)
+
 
 ## Docker
 
@@ -160,7 +164,7 @@ When docker compose up is finished go to http://localhost:5000/api/ui to see the
  
 
 
-**For the Docker solution the MovieLens version with 100K ratings was used**
+**For the Docker solution the MovieLens version with 100K ratings was used.**
 
 If you want to use the 20M dataset:
 
@@ -256,7 +260,7 @@ Returns:
 ]
 ```
 
-Cypher query:
+Cypher query in Neo4j:
 
 ```cypher
 MATCH (m:Movie)<-[:IS_GENRE_OF]-(g:Genre)-[:IS_GENRE_OF]->(rec:Movie)
@@ -304,7 +308,7 @@ Returns:
   }
 ]
 ```
-Cypher query:
+Cypher query in Neo4j:
 
 ```
 MATCH (u1:User {id:[USER_ID]})-[r:RATED]->(m:Movie)
