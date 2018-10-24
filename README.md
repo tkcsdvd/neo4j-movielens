@@ -13,7 +13,7 @@ Load MovieLens dataset into Neo4j and provide an API to retrieve data.
  * [Ingestion](#ingestion)
  * [API](#api)
  * [Docker](#docker)
- * [Recommender Enginer](#recommender-engine)
+ * [Recommender Engine](#recommender-engine)
 
 
 ## Requirements
