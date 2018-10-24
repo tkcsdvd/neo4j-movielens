@@ -18,6 +18,8 @@ PASS = "neo4j" #default
 
 graph = Graph("bolt://" + HOST + ":7687", auth=(USER, PASS))
 
+####### Movie #######
+
 # Get the available deatils of a given movie
 @app.route('/api/movie/details/<title>')
 def getMovieData(title):
@@ -62,6 +64,8 @@ def getMovieAverageRating(title):
 
     return jsonify(avg.data())
 
+####### Top #######
+
 # Get top N highest rated movies
 @app.route('/api/top/movie/top-n/<n>')
 def getMovieTopN(n):
@@ -76,8 +80,7 @@ def getMovieNMostRated(n):
 
     return mvs.data()
 
-
-
+####### User #######
 
 # Get the submitted ratings by a given user
 @app.route('/api/user/ratings/<userId>')
@@ -100,20 +103,40 @@ def getUserAverageRating(userId):
 
     return jsonify(avg.data())
 
-
-##### Recommender Enginer
+####### Recommender Engine #######
 
 # Content based
 @app.route('/api/rec_engine/content/<title>/<n>')
 
 def getRecContent(title,n):
-    avg = graph.run('MATCH (m:Movie)<-[:IS_GENRE_OF]-(g:Genre)-[:IS_GENRE_OF]->(rec:Movie) '
+    rec = graph.run('MATCH (m:Movie)<-[:IS_GENRE_OF]-(g:Genre)-[:IS_GENRE_OF]->(rec:Movie) '
                     'WHERE m.title = {title} '
                     'WITH rec, COLLECT(g.name) AS genres, COUNT(*) AS numberOfSharedGenres '
                     'RETURN rec.title as title, genres, numberOfSharedGenres '
                     'ORDER BY numberOfSharedGenres DESC LIMIT toInt({n});', title=title, n=n)
 
-    return jsonify(avg.data())
+    return jsonify(rec.data())
+
+# Collaborative Filtering
+@app.route('/api/rec_engine/collab/<userid>/<n>')
+
+def getRecCollab(userid,n):
+    rec = graph.run('MATCH (u1:User {id:{userid}})-[r:RATED]->(m:Movie) '
+                    'WITH u1, avg(r.rating) AS u1_mean '
+                    'MATCH (u1)-[r1:RATED]->(m:Movie)<-[r2:RATED]-(u2) '
+                    'WITH u1, u1_mean, u2, COLLECT({r1: r1, r2: r2}) AS ratings WHERE size(ratings) > 10 '
+                    'MATCH (u2)-[r:RATED]->(m:Movie) '
+                    'WITH u1, u1_mean, u2, avg(r.rating) AS u2_mean, ratings '
+                    'UNWIND ratings AS r '
+                    'WITH sum( (r.r1.rating-u1_mean) * (r.r2.rating-u2_mean) ) AS nom, '
+                    'sqrt( sum( (r.r1.rating - u1_mean)^2) * sum( (r.r2.rating - u2_mean) ^2)) AS denom, u1, u2 WHERE denom <> 0 '
+                    'WITH u1, u2, nom/denom AS pearson '
+                    'ORDER BY pearson DESC LIMIT 10 '
+                    'MATCH (u2)-[r:RATED]->(m:Movie) WHERE NOT EXISTS( (u1)-[:RATED]->(m) ) '
+                    'RETURN m.title AS title, SUM( pearson * r.rating) AS score '
+                    'ORDER BY score DESC LIMIT toInt({n});', userid=userid, n=n)
+
+    return jsonify(rec.data())
 
 if __name__ == '__main__':
 
