@@ -142,7 +142,7 @@ will return:
 
 When docker compose up is finished go to http://localhost:5000/api/ui to see the full documentation.
 
-![](https://i.imgur.com/4MaEl2w.png)
+![](https://i.imgur.com/wyFCgwo.png)
 
 For example:
 
