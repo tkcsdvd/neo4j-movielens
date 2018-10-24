@@ -34,13 +34,14 @@ Load MovieLens dataset in a graph structure into Neo4j and provide an API to ret
 │   └── movielens-app.py│
 │      
 ├── docker/
-│   │── ingestion/
-│   │   │── Dockerfile
-│   │   │── ingestion.py
-│   │   └── requirements.txt
-│   └── docker-compose.yml
+│   └── ...
 │
 ├── ingestion/
+│   │── data/
+│   │   │── links.csv
+│   │   │── movies.csv
+│   │   │── ratings.csv
+│   │   └── tags.csv
 │   │── test/
 │   │   └── ingestion_tests.py
 │   └── ingestion.py
@@ -182,37 +183,44 @@ If only a subset is used, some relationships might not be created due to missing
  
 ##### Structure
 
-
 ```
-docker
-│   README.md
-│   docker-compose.yml    
+docker/
+├── api/
+│   │── swagger/
+│   │   └── swagger.yml
+│   │── Dockerfile
+│   │── movielens-app.py
+│   └── requirements.txt
+│      
+├── ingestion/
+│   │── data/
+│   │   │── links.csv
+│   │   │── movies.csv
+│   │   │── ratings.csv
+│   │   └── tags.csv
+│   │── Dockerfile
+│   │── ingestion.py
+│   └── requirements.tx
 │
-└─── ingestion
-    │   Dockerfile
-    │   ingestion.py
-    │   requirements.txt
-    │
-    └─── data
-            links.csv
-            movies.csv
-            ratings.csv
-            tags.csv
+└── docker-compose.yml
 ```
+
 
 ## Recommender Engine
+
+Based on: http://guides.neo4j.com/sandbox/recommendations
 
 ##### Content-based
 
 Recommend top *N* movies for a given movie, based on common genres.
 
-/api/rec_engine/content/[TITLE]/[N]
+```/api/rec_engine/content/[TITLE]/[N]```
 
 **Example:**
 
 Top 3 movies similar to *Braveheart*.
 
-http://localhost:5001/api/rec_engine/content/Braveheart/3
+http://localhost:5000/api/rec_engine/content/Braveheart/3
 
 Returns:
 
@@ -256,4 +264,69 @@ WHERE m.title = [TITLE]
 WITH rec, COLLECT(g.name) AS genres, COUNT(*) AS sharedGenres
 RETURN rec.title as title, genres, sharedGenres
 ORDER BY sharedGenres DESC LIMIT [N];
+```
+
+##### Collaborative Filtering
+
+Recommend top *N* movies for a given user, based on collaborative filtering. For this to work properly much more than 1000 ratings should be loaded.
+
+```/api/rec_engine/collab/[USER_ID]/[N]```
+
+**Example:**
+
+For *User 1* returns top *5* movies.
+
+http://localhost:5000/api/rec_engine/collab/User%201/5
+
+Returns:
+
+```
+[
+  {
+    "score": 2.7610991022551645, 
+    "title": "Eat Drink Man Woman (Yin shi nan nu)"
+  }, 
+  {
+    "score": 2.1133083447185044, 
+    "title": "Heavenly Creatures"
+  }, 
+  {
+    "score": 2.0585623586160793, 
+    "title": "Living in Oblivion"
+  }, 
+  {
+    "score": 2.0585623586160793, 
+    "title": "Notorious"
+  }, 
+  {
+    "score": 2.0585623586160793, 
+    "title": "High Noon"
+  }
+]
+```
+Cypher query:
+
+```
+MATCH (u1:User {id:[USER_ID]})-[r:RATED]->(m:Movie)
+WITH u1, avg(r.rating) AS u1_mean
+
+MATCH (u1)-[r1:RATED]->(m:Movie)<-[r2:RATED]-(u2)
+WITH u1, u1_mean, u2, COLLECT({r1: r1, r2: r2}) AS ratings WHERE size(ratings) > 10
+
+MATCH (u2)-[r:RATED]->(m:Movie)
+WITH u1, u1_mean, u2, avg(r.rating) AS u2_mean, ratings
+
+UNWIND ratings AS r
+
+WITH sum( (r.r1.rating-u1_mean) * (r.r2.rating-u2_mean) ) AS nom,
+     sqrt( sum( (r.r1.rating - u1_mean)^2) * sum( (r.r2.rating - u2_mean) ^2)) AS denom,
+     u1, u2 WHERE denom <> 0
+
+WITH u1, u2, nom/denom AS pearson
+ORDER BY pearson DESC LIMIT 10
+
+MATCH (u2)-[r:RATED]->(m:Movie) WHERE NOT EXISTS( (u1)-[:RATED]->(m) )
+
+RETURN m.title, SUM( pearson * r.rating) AS score
+ORDER BY score DESC LIMIT [N]
 ```
