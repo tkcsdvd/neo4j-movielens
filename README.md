@@ -6,7 +6,7 @@ Load MovieLens dataset into Neo4j and provide an API to retrieve data.
 
 ## Table of contents
 
- * [Stack](#stack)
+ * [Requirements](#requirements)
  * [Project structure](#project-structure)
  * [Data](#data)
  * [Graph Structure](#graph-structure)
@@ -16,7 +16,7 @@ Load MovieLens dataset into Neo4j and provide an API to retrieve data.
  * [Recommender Enginer](#recommender-engine)
 
 
-## Stack
+## Requirements
 
  * python 3.7
  * py2neo
