@@ -91,7 +91,7 @@ The graph structure consists of nodes with 3 distinct *labels* (**Genre**, **Mov
 
 Python script (*ingestion.py*) that loads MovieLens dataset into Neo4j in a graph structure.
 
-#### Steps
+### Steps
 
  * Create **Genre** nodes
  * Load *movies.csv* 
@@ -107,7 +107,7 @@ Python script (*ingestion.py*) that loads MovieLens dataset into Neo4j in a grap
 
 ## API
 
-#### Description
+### Description
 
 API documentation is generated using *Swagger* and *Connexion*.
 
@@ -138,7 +138,7 @@ will return:
 ]
 ```
 
-#### Documentation
+### Documentation
 
 When docker compose up is finished go to http://localhost:5000/api/ui to see the full documentation.
 
@@ -151,7 +151,7 @@ For example:
 
 ## Docker
 
-##### Instructions
+### Instructions
  
  * *cd* into folder
  * run ``` docker-compose up ```
@@ -185,7 +185,7 @@ N_LINKS = 1000
 
 If only a subset is used, some relationships might not be created due to missing nodes.
  
-##### Structure
+### Structure
 
 ```
 docker/
@@ -214,7 +214,7 @@ docker/
 
 Based on: http://guides.neo4j.com/sandbox/recommendations
 
-##### Content-based
+### Content-based
 
 Recommend top *N* movies for a given movie, based on common genres.
 
@@ -270,7 +270,7 @@ RETURN rec.title as title, genres, sharedGenres
 ORDER BY sharedGenres DESC LIMIT [N];
 ```
 
-#### Collaborative Filtering
+### Collaborative Filtering
 
 Recommend top *N* movies for a given user, based on collaborative filtering. For this to work properly much more than 1000 ratings should be loaded.
 
